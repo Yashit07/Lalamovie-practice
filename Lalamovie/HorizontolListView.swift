@@ -1,0 +1,18 @@
+//
+//  HorizontolListView.swift
+//  Lalamovie
+//
+//  Created by Yashit Chawla on 05/11/25.
+//
+
+import SwiftUI
+
+struct HorizontolListView: View {
+    var body: some View {
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    }
+}
+
+#Preview {
+    HorizontolListView()
+}
