@@ -27,7 +27,7 @@ enum APIConfigError: Error, LocalizedError {
 enum NetworkError: Error, LocalizedError {
     case badURLResponse(underlyingError: Error)
     case missingConfig
-    case urlBuildFailed   // ← added this case
+    case urlBuildFailed
 
     var errorDescription: String? {
         switch self {

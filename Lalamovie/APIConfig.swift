@@ -13,9 +13,11 @@ struct APIConfig: Decodable {
     
     static let shared: APIConfig? = {
         do {
-            return try loadConfig()
+            let config = try loadConfig()
+            print("Loaded APIConfig OK: baseURL=\(config.tmdbBaseURL), apiKeyPresent=\(!config.tmdbAPIKey.isEmpty)")
+            return config
         } catch {
-            print ("failed to load API Config \(error.localizedDescription)")
+            print("failed to load API Config \(error.localizedDescription)")
             return nil
         }
     }()
@@ -35,3 +37,4 @@ struct APIConfig: Decodable {
         }
     }
 }
+
