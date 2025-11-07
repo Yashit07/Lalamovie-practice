@@ -6,3 +6,5 @@
 //
 
 import Foundation
+
+let tmdbBaseURL = APIConfig.shared?.tmdbBaseURL
