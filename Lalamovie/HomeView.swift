@@ -46,7 +46,7 @@ struct HomeView: View {
                                 .fill(Color(.systemBackground))
                                 .frame(height: 36)
                                 .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: -2)
-                                .offset(y: 18) // move it up into the image a bit (negative would move down)
+                                .offset(y: 18)
                                 .padding(.horizontal, 0)
                                 .blendMode(.normal)
                         }
@@ -115,9 +115,10 @@ struct HomeView: View {
                         .padding(.horizontal)
 
                         HorizontolListView(header: Constants.trendingMovieString, titles: viewModel.trendingMovies)
-    //                    HorizontolListView(header: Constants.trendingTvString)
-    //                    HorizontolListView(header: Constants.topRatedMovieString)
-    //                    HorizontolListView(header: Constants.topRatedTvString)
+                        // TV sections
+                        HorizontolListView(header: "Trending TV Series", titles: viewModel.trendingTV)
+                        HorizontolListView(header: Constants.topRatedMovieString, titles: viewModel.topRatedMovies)
+                        HorizontolListView(header: "Top Rated TV Series", titles: viewModel.topRatedTV)
                     }
                     
                 case .failed(let error):
@@ -155,6 +156,7 @@ struct HomeView: View {
                 
             }
             .ignoresSafeArea(.container, edges: .top)
+            // Initial load
             .task {
                 await viewModel.getTitles()
             }
