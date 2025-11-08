@@ -51,10 +51,11 @@ struct TitleDetailView: View {
                     }
                     .padding(16)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color(.systemBackground))
+//                    .background(Color(.systemBackground))
+                    .background(Color(.gray).opacity(0.12))
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                     .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 6)
-                    .padding(.horizontal)
+                    .padding(.horizontal, 6)
                     .padding(.top, -12) // pull up slightly to overlap more with the poster
                     .padding(.bottom, 24)
                 }
