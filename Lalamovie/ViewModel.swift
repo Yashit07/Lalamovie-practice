@@ -23,21 +23,37 @@ class ViewModel {
     var trendingTV : [Title] = []
     var topRatedMovies : [Title] = []
     var topRatedTV : [Title] = []
+    var heroTitle = Title.preiviewTtiles[0]
     
     func getTitles() async {
         homeStatus = .fetching
-        print("ViewModel.getTitles() started")
-        do {
-            trendingMovies = try await dataFetcher.fetchTitles(for: "movie", by: "trending")
-            trendingTV = try await dataFetcher.fetchTitles(for: "tv", by: "trending")
-            topRatedMovies = try await dataFetcher.fetchTitles(for: "movie", by: "top_rated")
-            topRatedTV = try await dataFetcher.fetchTitles(for: "tv", by: "top_rated")
-            print("ViewModel.getTitles() success, titles count:", trendingMovies.count)
+        
+        if trendingMovies.isEmpty {
+            
+            print("ViewModel.getTitles() started")
+            do {
+                async let tMovies = dataFetcher.fetchTitles(for: "movie", by: "trending")
+                async let tTv = dataFetcher.fetchTitles(for: "tv", by: "trending")
+                async let tRMovies = dataFetcher.fetchTitles(for: "movie", by: "top_rated")
+                async let tRTv = dataFetcher.fetchTitles(for: "tv", by: "top_rated")
+                
+                trendingMovies = try await tMovies
+                trendingTV = try await tTv
+                topRatedMovies = try await tRMovies
+                topRatedTV = try await tRTv
+                
+                if let title = trendingMovies.randomElement() {
+                    heroTitle = title
+                }
+                print("ViewModel.getTitles() success, titles count:", trendingMovies.count)
+                homeStatus = .success
+            } catch {
+                print("fetch error:", error.localizedDescription)
+                print("fetch error type:", type(of: error))
+                homeStatus = .failed(underlyingError: error)
+            }
+        } else {
             homeStatus = .success
-        } catch {
-            print("fetch error:", error.localizedDescription)
-            print("fetch error type:", type(of: error))
-            homeStatus = .failed(underlyingError: error)
         }
     }
 }
