@@ -11,6 +11,8 @@ struct DataFetcher {
     
     let tmdbBaseURL = APIConfig.shared?.tmdbBaseURL
     let tmdbAPIKey = APIConfig.shared?.tmdbAPIKey
+    let youtubeSearcURL = APIConfig.shared?.youtubeSearchURL
+    let youtubeAPIKey = APIConfig.shared?.youtubeAPIKey
     
     // Custom URLSession with relaxed TLS requirements
     private static let customSession: URLSession = {
@@ -31,9 +33,44 @@ struct DataFetcher {
         }
         
         print("Request URL:", fetchTitlesURL.absoluteString)
+        var titles = try await fetchAndDecode(url: fetchTitlesURL, type: TMDBAPIObject.self).results
         
         // Use custom session instead of shared
-        let (data, urlResponse) = try await Self.customSession.data(from: fetchTitlesURL)
+        
+        Constants.addPosterPath(to: &titles)
+        return titles
+    }
+    
+    
+    
+    func fetchVideoID(for title: String) async throws -> String {
+        // ✅ FIXED LINE BELOW — use `throw` not `throws`
+        guard let baseSearchURL = youtubeSearcURL else {
+            throw NetworkError.missingConfig
+        }
+        
+        guard let searchAPIKey = youtubeAPIKey else {
+            throw NetworkError.missingConfig
+        }
+        
+        let trailerSearch = title + youtubeURLStrings.space.rawValue + youtubeURLStrings.trailer.rawValue
+        
+        guard let fetchVideoURL = URL(string: baseSearchURL)?.appending(queryItems: [
+            URLQueryItem(name: youtubeURLStrings.queryShorten.rawValue, value: trailerSearch),
+            URLQueryItem(name: youtubeURLStrings.key.rawValue, value: searchAPIKey),
+        ]) else {
+            throw NetworkError.urlBuildFailed
+        }
+        
+        print(fetchVideoURL)
+        return try await fetchAndDecode(url: fetchVideoURL, type: YoutubeSearchResponse.self).items?.first?.id?.videoId ?? ""
+        
+        // You can later decode or return a String from here
+//        return fetchVideoURL.absoluteString
+    }
+    
+    func fetchAndDecode<T: Decodable>(url:URL, type: T.Type) async throws -> T {
+        let (data, urlResponse) = try await Self.customSession.data(from: url)
         
         if let http = urlResponse as? HTTPURLResponse {
             print("HTTP status:", http.statusCode)
@@ -51,9 +88,7 @@ struct DataFetcher {
         
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        var titles = try decoder.decode(APIObject.self, from: data).results
-        Constants.addPosterPath(to: &titles)
-        return titles
+        return try decoder.decode(type, from: data)
     }
     
     private func buildURL(media:String, type:String) throws -> URL? {
@@ -69,7 +104,6 @@ struct DataFetcher {
         if type == "trending" {
             path = "3/trending/\(media)/day"
         } else if type == "top_rated" {
-            // FIX: use "3/" not "r/"
             path = "3/\(media)/top_rated"
         } else {
             throw NetworkError.urlBuildFailed

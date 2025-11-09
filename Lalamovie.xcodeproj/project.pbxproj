@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		750E17962EC11219009EF220 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = 750E17952EC11219009EF220 /* YouTubePlayerKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		75654B7F2EBA79310065A618 /* Lalamovie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lalamovie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				750E17962EC11219009EF220 /* YouTubePlayerKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = Lalamovie;
 			packageProductDependencies = (
+				750E17952EC11219009EF220 /* YouTubePlayerKit */,
 			);
 			productName = Lalamovie;
 			productReference = 75654B7F2EBA79310065A618 /* Lalamovie.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 75654B762EBA79310065A618;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				750E17942EC11219009EF220 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 75654B802EBA79310065A618 /* Products */;
 			projectDirPath = "";
@@ -332,6 +341,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		750E17942EC11219009EF220 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		750E17952EC11219009EF220 /* YouTubePlayerKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 750E17942EC11219009EF220 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */;
+			productName = YouTubePlayerKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 75654B772EBA79310065A618 /* Project object */;
 }

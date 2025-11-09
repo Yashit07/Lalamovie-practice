@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct APIObject: Decodable {
+struct TMDBAPIObject: Decodable {
     var results: [Title] = []
 }
 
