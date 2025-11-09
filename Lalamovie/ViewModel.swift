@@ -25,6 +25,19 @@ class ViewModel {
     var topRatedTV : [Title] = []
     var heroTitle = Title.preiviewTtiles[0]
     
+    // Preview-friendly initializer to avoid mutating private(set) status from views
+    convenience init(preview: Bool) {
+        self.init()
+        if preview {
+            self.trendingMovies = Title.preiviewTtiles
+            self.trendingTV = Title.preiviewTtiles
+            self.topRatedMovies = Title.preiviewTtiles
+            self.topRatedTV = Title.preiviewTtiles
+            self.heroTitle = Title.preiviewTtiles[0]
+            self.homeStatus = .success
+        }
+    }
+    
     func getTitles() async {
         homeStatus = .fetching
         
@@ -57,3 +70,4 @@ class ViewModel {
         }
     }
 }
+

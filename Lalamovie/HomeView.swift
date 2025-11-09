@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-//    var heroTestTitle = Constants.testTitleURL3
+    //    var heroTestTitle = Constants.testTitleURL3
     @State var viewModel = ViewModel()
     @State private var titleDetailPath = NavigationPath()
   
@@ -43,87 +43,84 @@ struct HomeView: View {
                                         .frame(width: geo.size.width, height: geo.size.height * 0.85)
                                 }
                                 
-                                // Bottom overlay that slightly overlaps the image
-                                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                    .fill(Color(.systemBackground))
-                                    .frame(height: 36)
-                                    .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: -2)
-                                    .offset(y: 18)
-                                    .padding(.horizontal, 0)
-                                    .blendMode(.normal)
-                            }
-                            
-                            // Upgraded buttons
-                            HStack(spacing: 12) {
-                                Button {
-                                    titleDetailPath.append(viewModel.heroTitle)
-                                } label: {
-                                    HStack(spacing: 8) {
-                                        Image(systemName: "play.fill")
-                                            .font(.headline.weight(.semibold))
-                                        Text(Constants.playString)
-                                            .font(.headline.weight(.semibold))
-                                    }
-                                    .foregroundStyle(Color.white)
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 48)
-                                    .background(
-                                        LinearGradient(
-                                            colors: [
-                                                Color.accentColor,
-                                                Color.accentColor.opacity(0.9)
-                                            ],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        )
-                                    )
-                                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                                    .shadow(color: Color.black.opacity(0.18), radius: 12, x: 0, y: 8)
-                                }
-                                .buttonStyle(PressedScaleStyle())
-                                
-                                Button {
-                                    // Download action
-                                } label: {
-                                    HStack(spacing: 8) {
-                                        Image(systemName: "arrow.down.circle")
-                                            .font(.headline.weight(.semibold))
-                                        Text(Constants.downloadsString)
-                                            .font(.headline.weight(.semibold))
-                                    }
-                                    .foregroundStyle(.primary)
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 48)
-                                    .background(.ultraThinMaterial)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                            .strokeBorder(
-                                                LinearGradient(
-                                                    colors: [
-                                                        Color.primary.opacity(0.25),
-                                                        Color.primary.opacity(0.10)
-                                                    ],
-                                                    startPoint: .topLeading,
-                                                    endPoint: .bottomTrailing
-                                                ),
-                                                lineWidth: 1
+                                // Floating buttons over hero image
+                                HStack(spacing: 12) {
+                                    Button {
+                                        titleDetailPath.append(viewModel.heroTitle)
+                                    } label: {
+                                        HStack(spacing: 8) {
+                                            Image(systemName: "play.fill")
+                                                .font(.headline.weight(.semibold))
+                                            Text(Constants.playString)
+                                                .font(.headline.weight(.semibold))
+                                        }
+                                        .foregroundStyle(Color.white)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: 48)
+                                        .background(
+                                            LinearGradient(
+                                                colors: [
+                                                    Color.accentColor,
+                                                    Color.accentColor.opacity(0.9)
+                                                ],
+                                                startPoint: .topLeading,
+                                                endPoint: .bottomTrailing
                                             )
-                                    )
-                                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                                    .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 6)
+                                        )
+                                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                                        .shadow(color: Color.black.opacity(0.18), radius: 12, x: 0, y: 8)
+                                    }
+                                    .buttonStyle(PressedScaleStyle())
+                                    
+                                    Button {
+                                        // Download action
+                                    } label: {
+                                        HStack(spacing: 8) {
+                                            Image(systemName: "arrow.down.circle")
+                                                .font(.headline.weight(.semibold))
+                                            Text(Constants.downloadsString)
+                                                .font(.headline.weight(.semibold))
+                                        }
+                                        .foregroundStyle(.primary)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: 48)
+                                        .background(.ultraThinMaterial)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                                .strokeBorder(
+                                                    LinearGradient(
+                                                        colors: [
+                                                            Color.primary.opacity(0.25),
+                                                            Color.primary.opacity(0.10)
+                                                        ],
+                                                        startPoint: .topLeading,
+                                                        endPoint: .bottomTrailing
+                                                    ),
+                                                    lineWidth: 1
+                                                )
+                                        )
+                                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                                        .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 6)
+                                    }
+                                    .buttonStyle(PressedScaleStyle())
                                 }
-                                .buttonStyle(PressedScaleStyle())
+                                .padding(.horizontal)
+                                .padding(.bottom, 16) // lift off the bottom edge of the image
                             }
-                            .padding(.horizontal)
                             
-                            HorizontolListView(header: Constants.trendingMovieString, titles: viewModel.trendingMovies)
-                            // TV sections
-                            HorizontolListView(header: "Trending TV Series", titles: viewModel.trendingTV)
-                            HorizontolListView(header: Constants.topRatedMovieString, titles: viewModel.topRatedMovies)
-                            HorizontolListView(header: "Top Rated TV Series", titles: viewModel.topRatedTV)
-                        }
-                        .navigationDestination(for: Title.self) {Title in
-                            TitleDetailView(title: Title)
+                            // Sections below
+                            HorizontolListView(header: Constants.trendingMovieString, titles: viewModel.trendingMovies) { Title in
+                                titleDetailPath.append(Title)
+                            }
+                            HorizontolListView(header: "Trending TV Series", titles: viewModel.trendingTV) { Title in
+                                titleDetailPath.append(Title)
+                            }
+                            HorizontolListView(header: Constants.topRatedMovieString, titles: viewModel.topRatedMovies) { Title in
+                                titleDetailPath.append(Title)
+                            }
+                            HorizontolListView(header: "Top Rated TV Series", titles: viewModel.topRatedTV) { Title in
+                                titleDetailPath.append(Title)
+                            }
                         }
                         
                     case .failed(let error):
@@ -165,7 +162,10 @@ struct HomeView: View {
                 .task {
                     await viewModel.getTitles()
                 }
-                
+                // Single destination definition for Title
+                .navigationDestination(for: Title.self) { Title in
+                    TitleDetailView(title: Title)
+                }
             }
         }
     }
