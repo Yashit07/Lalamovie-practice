@@ -27,14 +27,7 @@ struct TitleDetailView: View {
                                 .frame(width: geo.size.width, height: geo.size.height * 0.5)
                         }
                         
-                        // Bottom overlay that slightly overlaps the image (same as HomeView)
-                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-                            .fill(Color(.systemBackground))
-                            .frame(height: 36)
-                            .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: -2)
-                            .offset(y: 18)
-                            .padding(.horizontal, 0)
-                            .blendMode(.normal)
+                        
                     }
                     
                     // Content card that appears as a rounded sheet above the poster
@@ -56,7 +49,7 @@ struct TitleDetailView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                     .shadow(color: Color.black.opacity(0.06), radius: 10, x: 0, y: 6)
                     .padding(.horizontal, 12)
-                    .padding(.top, -3.5) // pull up slightly to overlap more with the poster
+                    .padding(.top,12) // add space from the top (was -3.5)
                     .padding(.bottom, 24)
                 }
             }
