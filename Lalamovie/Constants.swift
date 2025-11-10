@@ -19,11 +19,17 @@ struct Constants{
     static let trendingTvString = "Trending TV"
     static let topRatedMovieString = "Top Rated Movies"
     static let topRatedTvString = "Top Rated TV"
+    static let movieSearchString = "Movie Search"
+    static let tvSearchString = "TV Search"
+    static let moviePlaceHolderString = "Search for a Movie"
+    static let tvPlaceHolderString = "Search for a TV Series"
     
     static let homeIconString = "house"
     static let UpcomingIconString = "play.circle"
     static let SearchIconString = "magnifyingglass"
     static let DownloadsIconString = "arrow.down.to.line"
+    static let tvIconString = "tv"
+    static let movieIconString = "movieclapper"
     
     static let testTitleURL = "https://media-cache.cinematerial.com/p/500x/ymlgsr9n/chennai-express-indian-movie-poster.jpg?v=1456507918"
     static let testTitleURL2 = "https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg"

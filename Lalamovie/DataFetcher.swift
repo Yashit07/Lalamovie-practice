@@ -11,7 +11,7 @@ struct DataFetcher {
     
     let tmdbBaseURL = APIConfig.shared?.tmdbBaseURL
     let tmdbAPIKey = APIConfig.shared?.tmdbAPIKey
-    let youtubeSearcURL = APIConfig.shared?.youtubeSearchURL
+    let youtubeSearchURL = APIConfig.shared?.youtubeSearchURL
     let youtubeAPIKey = APIConfig.shared?.youtubeAPIKey
     
     // Custom URLSession with relaxed TLS requirements
@@ -24,9 +24,9 @@ struct DataFetcher {
         return URLSession(configuration: config)
     }()
     
-    func fetchTitles(for media: String, by type:String) async throws -> [Title] {
+    func fetchTitles(for media: String, by type:String, with title:String? = nil) async throws -> [Title] {
         print("APIConfig baseURL:", tmdbBaseURL as Any, "apiKey present:", tmdbAPIKey != nil)
-        let fetchTitlesURL = try buildURL(media: media, type: type)
+        let fetchTitlesURL = try buildURL(media: media, type: type, searchPhrase: title)
         
         guard let fetchTitlesURL = fetchTitlesURL else {
             throw NetworkError.urlBuildFailed
@@ -45,7 +45,7 @@ struct DataFetcher {
     
     func fetchVideoID(for title: String) async throws -> String {
         // ✅ FIXED LINE BELOW — use `throw` not `throws`
-        guard let baseSearchURL = youtubeSearcURL else {
+        guard let baseSearchURL = youtubeSearchURL else {
             throw NetworkError.missingConfig
         }
         
@@ -91,7 +91,7 @@ struct DataFetcher {
         return try decoder.decode(type, from: data)
     }
     
-    private func buildURL(media:String, type:String) throws -> URL? {
+    private func buildURL(media:String, type:String, searchPhrase:String? = nil) throws -> URL? {
         guard let baseURL = tmdbBaseURL else {
             throw NetworkError.missingConfig
         }
@@ -102,18 +102,28 @@ struct DataFetcher {
         var path:String
         
         if type == "trending" {
-            path = "3/trending/\(media)/day"
-        } else if type == "top_rated" {
-            path = "3/\(media)/top_rated"
+            path = "3/\(type)/\(media)/day"
+        } else if type == "top_rated" || type == "upcoming" {
+            path = "3/\(media)/\(type)"
+        } else if type == "search" {
+            path = "3/\(type)/\(media)"
         } else {
             throw NetworkError.urlBuildFailed
         }
         
+        var urlqueryItems = [
+            URLQueryItem(name: "api_key", value: apiKey)
+        ]
+        
+        if let searchPhrase {
+            urlqueryItems.append(URLQueryItem(name:"query", value: searchPhrase))
+        }
+        
+        
+        
         guard let url = URL(string: baseURL)?
             .appending(path: path)
-            .appending(queryItems: [
-                URLQueryItem(name: "api_key", value: apiKey)
-            ]) else {
+            .appending(queryItems: urlqueryItems) else {
             throw NetworkError.urlBuildFailed
         }
         

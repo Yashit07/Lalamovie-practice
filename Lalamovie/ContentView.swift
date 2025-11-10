@@ -15,11 +15,11 @@ struct ContentView: View {
             }
             
             Tab(Constants.upcomingString,systemImage: Constants.UpcomingIconString){
-                Text(Constants.upcomingString)
+                UpcomingView()
             }
             
             Tab(Constants.searchString,systemImage: Constants.SearchIconString){
-                Text(Constants.searchString)
+                SearchView()
             }
             
             Tab(Constants.downloadsString,systemImage: Constants.DownloadsIconString){
