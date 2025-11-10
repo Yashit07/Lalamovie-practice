@@ -8,14 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		750E17962EC11219009EF220 /* YouTubePlayerKit in Frameworks */ = {isa = PBXBuildFile; productRef = 750E17952EC11219009EF220 /* YouTubePlayerKit */; };
-		750E17A02EC286B6009EF220 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750E179F2EC286B6009EF220 /* SearchView.swift */; };
-		75815EEC2EC2919F0007E43E /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75815EEB2EC2919F0007E43E /* SearchViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		750E179F2EC286B6009EF220 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		75654B7F2EBA79310065A618 /* Lalamovie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lalamovie.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		75815EEB2EC2919F0007E43E /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -41,8 +37,6 @@
 		75654B762EBA79310065A618 = {
 			isa = PBXGroup;
 			children = (
-				75815EEB2EC2919F0007E43E /* SearchViewModel.swift */,
-				750E179F2EC286B6009EF220 /* SearchView.swift */,
 				75654B812EBA79310065A618 /* Lalamovie */,
 				75654B802EBA79310065A618 /* Products */,
 			);
@@ -134,8 +128,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				750E17A02EC286B6009EF220 /* SearchView.swift in Sources */,
-				75815EEC2EC2919F0007E43E /* SearchViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
