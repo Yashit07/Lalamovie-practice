@@ -21,6 +21,11 @@ struct SearchView: View {
         searchByMovies ? "Search any Movie" : "Search any TV Series"
     }
     
+    // Second line text under the main title
+    private var secondaryLineText: String {
+        searchByMovies ? "Movies" : "TV Series"
+    }
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -55,7 +60,38 @@ struct SearchView: View {
                 }
                 .padding(.top, 12)
             }
-            .navigationTitle(navTitle)
+            // Replace default title with custom two-line left-aligned title (matching UpcomingView style)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            // Top line: larger, bold
+                            Text("Search for")
+                                .font(.title.weight(.bold))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
+                            
+                            // Bottom line: thin cursive, larger, shifted further right
+                            HStack(spacing: 115) {
+                                Spacer().frame(width: 1)
+                                Text(secondaryLineText)
+                                    .font(.custom(
+                                        "Snell Roundhand",
+                                        size: UIFont.preferredFont(forTextStyle: .title2).pointSize + 4
+                                    ))
+                                    .foregroundStyle(.secondary)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.8)
+                                Spacer(minLength: 0)
+                            }
+                        }
+                        .padding(.top, 80) // mirror the downward shift you applied in UpcomingView
+                        Spacer()
+                    }
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel(searchByMovies ? "Search Movies" : "Search TV Series")
+                }
+            }
             .searchable(text: $searchText, prompt: searchPrompt)
             .task(id: searchText) {
                 // Debounce typing
@@ -76,6 +112,7 @@ struct SearchView: View {
                 title: "Movies",
                 systemImage: Constants.movieIconString, // "movieclapper"
                 isSelected: searchByMovies
+                
             ) {
                 guard !searchByMovies else { return }
                 withAnimation(.spring(response: 0.35, dampingFraction: 0.9, blendDuration: 0.2)) {

@@ -50,7 +50,7 @@ struct UpcomingView: View {
                                 .font(.headline)
                                 .foregroundStyle(.white)
                                 .frame(width: 120, height: 44)
-                                .background(Color.accentColor)
+                                /*.background(Color.appPrimary)*/ // custom primary color
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
                         .padding(.top, 4)
@@ -61,7 +61,38 @@ struct UpcomingView: View {
                     .background(Color(.systemBackground))
                 }
             }
-            .navigationTitle(Constants.upcomingString)
+            // Styled two-line, left-aligned title, lowered a bit
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            // Top line: Title 1 bold
+                            Text(Constants.upcomingString)
+                                .font(.title.weight(.bold))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
+                            
+                            // Bottom line: thin cursive, shifted right
+                            HStack(spacing: 115) {
+                                Spacer().frame(width: 1)
+                                Text("Movies")
+                                    .font(.custom(
+                                        "Snell Roundhand",
+                                        size: UIFont.preferredFont(forTextStyle: .title2).pointSize + 4
+                                    ))
+                                    .foregroundStyle(.secondary)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.8)
+                                Spacer(minLength: 0)
+                            }
+                        }
+                        .padding(.top, 80) // drop the title block down a bit
+                        Spacer()
+                    }
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel("Upcoming Movies")
+                }
+            }
             .task {
                 await viewModel.getUpcomingMovies()
             }
@@ -72,4 +103,3 @@ struct UpcomingView: View {
 #Preview {
     UpcomingView()
 }
-

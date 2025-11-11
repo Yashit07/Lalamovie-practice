@@ -16,11 +16,62 @@ struct HorizontolListView: View {
     private let cardCornerRadius: CGFloat = 20
     private let imageCornerRadius: CGFloat = 12
     
+    // Derived header parts for styling
+    private var primaryHeader: String {
+        // Known patterns first
+        if header.hasPrefix("Trending ") {
+            return "Trending"
+        } else if header.hasPrefix("Top Rated ") {
+            return "Top Rated"
+        }
+        // Fallback: take all but the last word(s)
+        let parts = header.split(separator: " ")
+        if parts.count > 1 {
+            return parts.dropLast().joined(separator: " ")
+        } else {
+            return header
+        }
+    }
+    
+    private var secondaryHeader: String {
+        if header.hasPrefix("Trending ") {
+            return String(header.dropFirst("Trending ".count))
+        } else if header.hasPrefix("Top Rated ") {
+            return String(header.dropFirst("Top Rated ".count))
+        }
+        // Fallback: last word(s)
+        let parts = header.split(separator: " ")
+        if parts.count > 1 {
+            return String(parts.suffix(1).joined(separator: " "))
+        } else {
+            return ""
+        }
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(header)
-                .font(.title)
-                .padding(.horizontal, 12)
+            // Styled, two-line header (no vertical drop)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(primaryHeader)
+                    .font(.title2.weight(.bold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.9)
+                
+                HStack(spacing: 80) {
+                    Spacer().frame(width: 1) // slight right shift for the cursive line
+                    Text(secondaryHeader)
+                        .font(.custom(
+                            "Snell Roundhand",
+                            size: UIFont.preferredFont(forTextStyle: .title3).pointSize + 2
+                        ))
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.9)
+                        .bold()
+                    Spacer(minLength: 0)
+                }
+            }
+            .padding(.horizontal, 12)
             
             // One unified card background for the entire horizontal list
             ZStack {
