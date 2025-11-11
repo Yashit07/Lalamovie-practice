@@ -9,24 +9,24 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        TabView{
-            Tab(Constants.homeString,systemImage: Constants.homeIconString){
+        TabView {
+            Tab(Constants.homeString, systemImage: Constants.homeIconString) {
                 HomeView()
             }
             
-            Tab(Constants.upcomingString,systemImage: Constants.UpcomingIconString){
+            Tab(Constants.upcomingString, systemImage: Constants.UpcomingIconString) {
                 UpcomingView()
             }
             
-            Tab(Constants.searchString,systemImage: Constants.SearchIconString){
+            Tab(Constants.searchString, systemImage: Constants.SearchIconString) {
                 SearchView()
             }
             
-            Tab(Constants.downloadsString,systemImage: Constants.DownloadsIconString){
+            Tab(Constants.downloadsString, systemImage: Constants.DownloadsIconString) {
                 Text(Constants.downloadsString)
             }
         }
-        
+        .tint(Color("primaryc")) // Tab bar tint color
     }
 }
 

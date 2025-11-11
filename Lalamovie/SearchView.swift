@@ -93,6 +93,7 @@ struct SearchView: View {
                 }
             }
             .searchable(text: $searchText, prompt: searchPrompt)
+            .tint(Color("primaryc")) // Search bar cursor and cancel button
             .task(id: searchText) {
                 // Debounce typing
                 try? await Task.sleep(for: .milliseconds(500))
@@ -156,7 +157,7 @@ struct SearchView: View {
             ZStack {
                 if isSelected {
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(Color.accentColor.opacity(0.18))
+                        .fill(Color("primaryc").opacity(0.18)) // Changed from Color.accentColor
                         .matchedGeometryEffect(id: "SEGMENT_HIGHLIGHT", in: toggleNamespace)
                 }
                 HStack(spacing: 8) {
@@ -165,7 +166,7 @@ struct SearchView: View {
                     Text(title)
                         .font(.headline.weight(.semibold))
                 }
-                .foregroundStyle(isSelected ? Color.accentColor : .primary)
+                .foregroundStyle(isSelected ? Color("primaryc") : .primary) // Changed from Color.accentColor
                 .frame(maxWidth: .infinity)
                 .frame(height: 40)
                 .contentShape(Rectangle())

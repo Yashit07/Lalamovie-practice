@@ -22,6 +22,7 @@ struct UpcomingView: View {
                         Spacer()
                         ProgressView()
                             .scaleEffect(1.3)
+                            .tint(Color("primaryc")) // Progress view color
                         Spacer()
                     }
                     .frame(maxWidth: .infinity)
@@ -36,7 +37,7 @@ struct UpcomingView: View {
                         Image(systemName: "wifi.slash")
                             .font(.system(size: 52))
                             .foregroundStyle(.secondary)
-                        Text("Couldn’t Load Upcoming")
+                        Text("Couldn't Load Upcoming")
                             .font(.title3.bold())
                         Text(underlyingError.localizedDescription)
                             .font(.subheadline)
@@ -50,7 +51,7 @@ struct UpcomingView: View {
                                 .font(.headline)
                                 .foregroundStyle(.white)
                                 .frame(width: 120, height: 44)
-                                /*.background(Color.appPrimary)*/ // custom primary color
+                                .background(Color("primaryc")) // Changed from Color.appPrimary
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
                         .padding(.top, 4)

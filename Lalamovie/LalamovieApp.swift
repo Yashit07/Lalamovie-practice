@@ -12,6 +12,7 @@ struct LalamovieApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .tint(Color("primaryc")) // Global tint color for all system blues
         }
     }
 }

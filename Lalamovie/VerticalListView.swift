@@ -34,6 +34,7 @@ struct VerticalListView: View {
                                     RoundedRectangle(cornerRadius: imageCornerRadius, style: .continuous)
                                         .fill(Color(.systemGray5))
                                     ProgressView()
+                                        .tint(Color("primaryc"))
                                 }
                             }
                             .frame(width: 90, height: 130)
@@ -92,7 +93,7 @@ struct VerticalListView: View {
     }
 }
 
-// Small reusable rounded rectangle badge that matches the app’s motif
+// Small reusable rounded rectangle badge that matches the app's motif
 private struct RoundedBadge: View {
     let text: String
     var body: some View {
@@ -103,7 +104,8 @@ private struct RoundedBadge: View {
             .padding(.vertical, 6)
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color.accentColor)
+                    .fill(Color("primaryc")) // Changed from Color.accentColor
+                
             )
             .shadow(color: Color.black.opacity(0.12), radius: 6, x: 0, y: 4)
     }
@@ -112,4 +114,3 @@ private struct RoundedBadge: View {
 #Preview {
     VerticalListView(titles: Title.preiviewTtiles)
 }
-

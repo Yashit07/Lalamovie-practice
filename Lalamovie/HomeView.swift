@@ -25,6 +25,7 @@ struct HomeView: View {
                             Spacer()
                             ProgressView()
                                 .scaleEffect(1.5)
+                                .tint(Color("primaryc")) // Progress view color
                             Spacer()
                         }
                         .frame(maxWidth: .infinity)
@@ -40,6 +41,7 @@ struct HomeView: View {
                                         .contentShape(Rectangle())
                                 } placeholder: {
                                     ProgressView()
+                                        .tint(Color("primaryc")) // Progress view color
                                         .frame(width: geo.size.width, height: geo.size.height * 0.85)
                                 }
                                 
@@ -60,8 +62,8 @@ struct HomeView: View {
                                         .background(
                                             LinearGradient(
                                                 colors: [
-                                                    Color.accentColor,
-                                                    Color.accentColor.opacity(0.9)
+                                                    Color("primaryc"), // Changed from Color.accentColor
+                                                    Color("primaryc").opacity(0.9) // Changed from Color.accentColor
                                                 ],
                                                 startPoint: .topLeading,
                                                 endPoint: .bottomTrailing
@@ -146,7 +148,7 @@ struct HomeView: View {
                                     .font(.headline)
                                     .foregroundStyle(.white)
                                     .frame(width: 120, height: 44)
-                                    .background(Color.accentColor)
+                                    .background(Color("primaryc")) // Changed from Color.accentColor
                                     .clipShape(RoundedRectangle(cornerRadius: 12))
                             }
                             .padding(.top, 8)
