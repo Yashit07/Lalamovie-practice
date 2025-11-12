@@ -13,7 +13,8 @@ struct Constants{
     static let homeString = "Home"
     static let upcomingString = "Upcoming"
     static let searchString = "Search"
-    static let downloadsString = "Downloads"
+    static let downloadsString = "Downloads" // Keep for Tab label
+    static let downloadString = "Download"   // New: use for buttons and actions
     static let playString = "Play"
     static let trendingMovieString = "Trending Movies"
     static let trendingTvString = "Trending TV"
@@ -66,3 +67,4 @@ extension Text {
 
     }
 }
+

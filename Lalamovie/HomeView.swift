@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
     //    var heroTestTitle = Constants.testTitleURL3
     @State var viewModel = ViewModel()
     @State private var titleDetailPath = NavigationPath()
+    @Environment(\.modelContext) var modelContext
   
     var body: some View {
         NavigationStack(path: $titleDetailPath) {
@@ -75,12 +77,13 @@ struct HomeView: View {
                                     .buttonStyle(PressedScaleStyle())
                                     
                                     Button {
-                                        // Download action
+                                        modelContext.insert(viewModel.heroTitle)
+                                        try? modelContext.save()
                                     } label: {
                                         HStack(spacing: 8) {
                                             Image(systemName: "arrow.down.circle")
                                                 .font(.headline.weight(.semibold))
-                                            Text(Constants.downloadsString)
+                                            Text(Constants.downloadString)
                                                 .font(.headline.weight(.semibold))
                                         }
                                         .foregroundStyle(.primary)

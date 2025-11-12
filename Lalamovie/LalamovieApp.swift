@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct LalamovieApp: App {
@@ -14,5 +15,6 @@ struct LalamovieApp: App {
             ContentView()
                 .tint(Color("primaryc")) // Global tint color for all system blues
         }
+        .modelContainer(for: Title.self)
     }
 }

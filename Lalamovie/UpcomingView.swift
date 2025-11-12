@@ -29,7 +29,7 @@ struct UpcomingView: View {
                     .frame(height: geo.size.height)
                     .background(Color(.systemBackground))
                 case .success:
-                    VerticalListView(titles: viewModel.upcomingMovies)
+                    VerticalListView(titles: viewModel.upcomingMovies, canDelete: false)
                         .background(Color(.systemBackground))
                 case .failed(let underlyingError):
                     VStack(spacing: 12) {

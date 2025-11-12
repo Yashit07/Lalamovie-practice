@@ -11,6 +11,7 @@ struct SearchView: View {
     @State private var searchByMovies = true
     @State private var searchText = ""
     private let searchViewModel = SearchViewModel()
+    @State private var navigationPath = NavigationPath()
     @Namespace private var toggleNamespace
     
     // Custom titles and prompts as requested
@@ -27,7 +28,7 @@ struct SearchView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             ScrollView {
                 VStack(spacing: 16) {
                     // Segmented toggle
@@ -53,6 +54,9 @@ struct SearchView: View {
                                 ProgressView()
                             }
                             .frame(width: 120, height: 200)
+                            .onTapGesture {
+                                navigationPath.append(title)
+                            }
                         }
                     }
                     .padding(.horizontal, 12)
@@ -103,6 +107,9 @@ struct SearchView: View {
             .task {
                 // Initial load
                 await searchViewModel.getSearchTitles(by: searchByMovies ? "movie" : "tv", for: searchText)
+            }
+            .navigationDestination(for: Title.self) { title in
+                TitleDetailView(title: title)
             }
         }
     }

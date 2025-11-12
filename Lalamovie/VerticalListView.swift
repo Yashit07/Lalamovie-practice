@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct VerticalListView: View {
     var titles: [Title]
+    let canDelete: Bool
+    @Environment(\.modelContext) var modelContext
     
     // Design tokens aligned with the rest of the app
     private let cardCornerRadius: CGFloat = 20
@@ -86,6 +89,17 @@ struct VerticalListView: View {
                     }
                     .buttonStyle(.plain)
                     .padding(.horizontal, cardPadding)
+                    .swipeActions(edge: .trailing) {
+                        if canDelete {
+                            Button {
+                                modelContext.delete(title)
+                                try? modelContext.save()
+                            } label: {
+                                Image(systemName: "trash")
+                            }
+                            .tint(.red)
+                        }
+                    }
                 }
             }
             .padding(.vertical, 8)
@@ -104,13 +118,12 @@ private struct RoundedBadge: View {
             .padding(.vertical, 6)
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(Color("primaryc")) // Changed from Color.accentColor
-                
+                    .fill(Color("primaryc"))
             )
             .shadow(color: Color.black.opacity(0.12), radius: 6, x: 0, y: 4)
     }
 }
 
 #Preview {
-    VerticalListView(titles: Title.preiviewTtiles)
+    VerticalListView(titles: Title.preiviewTtiles, canDelete: true)
 }

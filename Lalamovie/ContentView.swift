@@ -23,7 +23,7 @@ struct ContentView: View {
             }
             
             Tab(Constants.downloadsString, systemImage: Constants.DownloadsIconString) {
-                Text(Constants.downloadsString)
+                DownloadView()
             }
         }
         .tint(Color("primaryc")) // Tab bar tint color
