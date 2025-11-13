@@ -35,16 +35,11 @@ struct DataFetcher {
         print("Request URL:", fetchTitlesURL.absoluteString)
         var titles = try await fetchAndDecode(url: fetchTitlesURL, type: TMDBAPIObject.self).results
         
-        // Use custom session instead of shared
-        
         Constants.addPosterPath(to: &titles)
         return titles
     }
     
-    
-    
     func fetchVideoID(for title: String) async throws -> String {
-        // ✅ FIXED LINE BELOW — use `throw` not `throws`
         guard let baseSearchURL = youtubeSearchURL else {
             throw NetworkError.missingConfig
         }
@@ -64,23 +59,18 @@ struct DataFetcher {
         
         print(fetchVideoURL)
         return try await fetchAndDecode(url: fetchVideoURL, type: YoutubeSearchResponse.self).items?.first?.id?.videoId ?? ""
-        
-        // You can later decode or return a String from here
-//        return fetchVideoURL.absoluteString
     }
     
     func fetchAndDecode<T: Decodable>(url:URL, type: T.Type) async throws -> T {
         let (data, urlResponse) = try await Self.customSession.data(from: url)
         
         if let http = urlResponse as? HTTPURLResponse {
-            print("HTTP status:", http.statusCode)
+            print("HTTP status:", http.statusCode, "for", url.absoluteString)
             if http.statusCode != 200 {
-                let snippet = String(data: data.prefix(512), encoding: .utf8) ?? "<non-utf8>"
-                print("Non-200 response body (first 512 bytes):", snippet)
-                throw NetworkError.badURLResponse(underlyingError: NSError(
-                    domain: "dataFetcher",
-                    code: http.statusCode,
-                    userInfo: [NSLocalizedDescriptionKey: "Invalid HTTP Response"]))
+                let snippet = String(data: data.prefix(512), encoding: .utf8)
+                print("Non-200 response body (first 512 bytes):", snippet ?? "<non-utf8>")
+                let context = HTTPFailureContext(statusCode: http.statusCode, snippet: snippet, url: url)
+                throw NetworkError.badURLResponse(context: context)
             }
         } else {
             print("URLResponse is not HTTPURLResponse:", urlResponse)
@@ -119,8 +109,6 @@ struct DataFetcher {
             urlqueryItems.append(URLQueryItem(name:"query", value: searchPhrase))
         }
         
-        
-        
         guard let url = URL(string: baseURL)?
             .appending(path: path)
             .appending(queryItems: urlqueryItems) else {
@@ -130,3 +118,4 @@ struct DataFetcher {
         return url
     }
 }
+

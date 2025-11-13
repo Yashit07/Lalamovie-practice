@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 
-
 struct Constants{
     static let homeString = "Home"
     static let upcomingString = "Upcoming"
@@ -54,17 +53,5 @@ enum youtubeURLStrings: String {
     case key = "key"
 }
 
-extension Text {
-    func ghostButton() -> some View {
-        self
-            .frame(width: 70, height: 40)
-            .foregroundStyle(.buttonText)
-            .bold()
-            .background {
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .stroke(lineWidth: 2)
-            }
-
-    }
-}
+// Removed unused Text.ghostButton() extension (not referenced anywhere)
 

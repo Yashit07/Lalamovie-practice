@@ -15,9 +15,7 @@ struct SearchView: View {
     @Namespace private var toggleNamespace
     
     // Custom titles and prompts as requested
-    private var navTitle: String {
-        searchByMovies ? "Search for Movies" : "Search for TV Series"
-    }
+    // Removed unused navTitle (custom toolbar is used instead)
     private var searchPrompt: String {
         searchByMovies ? "Search any Movie" : "Search any TV Series"
     }
@@ -128,7 +126,7 @@ struct SearchView: View {
                 }
                 Haptic.selection()
                 Task {
-                    await searchViewModel.getSearchTitles(by: "movie", for: searchText)
+                    await searchViewModel.getSearchTitles(by: "movie", for: $searchText.wrappedValue)
                 }
             }
             segmentButton(
@@ -142,7 +140,7 @@ struct SearchView: View {
                 }
                 Haptic.selection()
                 Task {
-                    await searchViewModel.getSearchTitles(by: "tv", for: searchText)
+                    await searchViewModel.getSearchTitles(by: "tv", for: $searchText.wrappedValue)
                 }
             }
         }
@@ -195,3 +193,4 @@ private enum Haptic {
 #Preview {
     SearchView()
 }
+
